@@ -23,7 +23,12 @@ def home():
 @app.route('/dashboard')
 def dashboard():
     progetti = carica_progetti()
-    return render_template('dashboard.html', progetti=progetti)
+    modifica_id = request.args.get('modifica_id', type=int)
+    progetto_modifica = None
+    if modifica_id:
+        progetto_modifica = next((p for p in progetti if p['id'] == modifica_id), None)
+    return render_template('dashboard.html', progetti=progetti, progetto_modifica=progetto_modifica)
+
 
 @app.route('/dashboard/aggiungi', methods=['POST'])
 def aggiungi_progetto():
@@ -49,28 +54,21 @@ def elimina_progetto(id):
     salva_progetti(progetti)
     return redirect(url_for('dashboard'))
 
-@app.route('/dashboard/modifica/<int:id>', methods=['GET', 'POST'])
+@app.route('/dashboard/modifica/<int:id>', methods=['POST'])
 def modifica_progetto(id):
     progetti = carica_progetti()
     progetto = next((p for p in progetti if p['id'] == id), None)
+    if not progetto:
+        return "Progetto non trovato", 404
+
     dati = request.form
-    progetto = {
-        "id": id,
-        "titolo": dati.get('titolo'),
-        "descrizione": dati.get('descrizione'),
-        "categoria": dati.get('categoria'),
-        "data_creazione": dati.get('data_creazione'),
-        "stato": dati.get('stato')
-    }
-    nuova_lista = []
-    for p in progetti:
-        if p['id'] == id:
-            nuova_lista.append(progetto)  # progetto modificato
-        else:
-            nuova_lista.append(p)  # progetto originale
-    progetti = nuova_lista
+    progetto['titolo'] = dati.get('titolo')
+    progetto['descrizione'] = dati.get('descrizione')
+    progetto['categoria'] = dati.get('categoria')
+    progetto['stato'] = dati.get('stato')
     salva_progetti(progetti)
     return redirect(url_for('dashboard'))
+
 
 
 @app.route('/converter')

@@ -1,1 +1,18 @@
-[]
+[
+    {
+        "id": 1,
+        "titolo": "Privacy e Sicurezza",
+        "descrizione": "s<gsagagr",
+        "categoria": "Caso",
+        "data_creazione": "2025-05-29",
+        "stato": "Pianificato"
+    },
+    {
+        "id": 2,
+        "titolo": "Programmazione Web: HTML, CSS, PHP",
+        "descrizione": "fgagzssgarg",
+        "categoria": "Caso",
+        "data_creazione": "2025-05-29",
+        "stato": "Impossibile"
+    }
+]

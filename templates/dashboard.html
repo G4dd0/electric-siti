@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Maker Dashboard{% endblock %}
+
+{% block content %}
+<h2>Lista Progetti</h2>
+
+<table border="1" cellpadding="6" cellspacing="0">
+    <thead>
+        <tr>
+            <th>ID</th><th>Titolo</th><th>Categoria</th><th>Stato</th><th>Data</th><th>Azioni</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for p in progetti %}
+        <tr>
+            <td>{{ p.id }}</td>
+            <td>{{ p.titolo }}</td>
+            <td>{{ p.categoria }}</td>
+            <td>{{ p.stato }}</td>
+            <td>{{ p.data_creazione }}</td>
+            <td>
+                <form method="POST" action="{{ url_for('elimina_progetto', id=p.id) }}" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Eliminare il progetto {{ p.titolo }}?');">Elimina</button>
+                </form>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<h3>Aggiungi nuovo progetto</h3>
+<form method="POST" action="{{ url_for('aggiungi_progetto') }}">
+    <label>Titolo: <input type="text" name="titolo" required /></label><br />
+    <label>Descrizione:<br /><textarea name="descrizione" rows="4" cols="40"></textarea></label><br />
+    <label>Categoria: <input type="text" name="categoria" /></label><br />
+    <label>Stato: 
+        <select name="stato">
+            <option value="In corso">In corso</option>
+            <option value="Completato">Completato</option>
+            <option value="Pianificato">Pianificato</option>
+            <option value="Impossibile">Impossibile</option>
+        </select>
+    </label><br />
+    <button type="submit">Aggiungi progetto</button>
+</form>
+{% endblock %}

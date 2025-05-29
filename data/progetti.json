@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "titolo": "Radio a cristallo",
+        "descrizione": "Progetto per costruire una radio senza alimentazione esterna",
+        "categoria": "Elettronica",
+        "data_creazione": "2025-05-29",
+        "stato": "In corso"
+    },
+    {
+        "id": 2,
+        "titolo": "Privacy e Sicurezza",
+        "descrizione": "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ",
+        "categoria": "Caso",
+        "data_creazione": "2025-05-29",
+        "stato": "Completato"
+    }
+]

@@ -24,6 +24,11 @@
                     <button type="submit" onclick="return confirm('Eliminare il progetto {{ p.titolo }}?');">Elimina</button>
                 </form>
             </td>
+            <td>
+                <form method="POST" action="{{ url_for('modifica_progetto', id=p.id) }}" style="display:inline;">
+                    <button type="submit" onclick="return confirm('Modificare {{ p.titolo }}?');">Modifica</button>
+                </form>
+            </td>
         </tr>
     {% endfor %}
     </tbody>
@@ -44,4 +49,5 @@
     </label><br />
     <button type="submit">Aggiungi progetto</button>
 </form>
+
 {% endblock %}

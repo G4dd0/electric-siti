@@ -49,9 +49,34 @@ def elimina_progetto(id):
     salva_progetti(progetti)
     return redirect(url_for('dashboard'))
 
+@app.route('/dashboard/modifica/<int:id>', methods=['GET', 'POST'])
+def modifica_progetto(id):
+    progetti = carica_progetti()
+    progetto = next((p for p in progetti if p['id'] == id), None)
+    dati = request.form
+    progetto = {
+        "id": id,
+        "titolo": dati.get('titolo'),
+        "descrizione": dati.get('descrizione'),
+        "categoria": dati.get('categoria'),
+        "data_creazione": dati.get('data_creazione'),
+        "stato": dati.get('stato')
+    }
+    nuova_lista = []
+    for p in progetti:
+        if p['id'] == id:
+            nuova_lista.append(progetto)  # progetto modificato
+        else:
+            nuova_lista.append(p)  # progetto originale
+    progetti = nuova_lista
+    salva_progetti(progetti)
+    return redirect(url_for('dashboard'))
+
+
 @app.route('/converter')
 def converter():
     return render_template('converter.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True)

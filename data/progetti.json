@@ -10,9 +10,17 @@
     {
         "id": 2,
         "titolo": "Programmazione Web: HTML, CSS, PHP",
-        "descrizione": "fgagzssgarg",
-        "categoria": "Caso",
-        "data_creazione": "2025-05-29",
+        "descrizione": "ahthwr",
+        "categoria": "Ciaoe",
+        "data_creazione": "2025-05-30",
+        "stato": "Pianificato"
+    },
+    {
+        "id": 3,
+        "titolo": "Progetto AI (con Giovanni FBK)",
+        "descrizione": "qehwqjht",
+        "categoria": "Vero o Falso",
+        "data_creazione": "2025-05-30",
         "stato": "Impossibile"
     }
 ]

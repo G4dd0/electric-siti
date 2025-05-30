@@ -1,10 +1,11 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <title>Sito Progetto</title>
-</head>
-<body>
-    <h1>Ciao dal tuo primo sito Flask!</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Home - Sito Progetto{% endblock %}
+
+{% block content %}
+<h1>Benvenuto al Sito dei Progetti Maker!</h1>
+<p>Qui puoi gestire i tuoi progetti elettronici, modificarli, eliminarli e accedere a strumenti utili.</p>
+
+<a class="button-link" href="{{ url_for('dashboard') }}">Vai alla Dashboard</a>
+<a class="button-link" href="{{ url_for('converter') }}">Vai al Convertitore</a>
+{% endblock %}

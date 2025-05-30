@@ -1,0 +1,94 @@
+/* Reset base */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+}
+
+/* Layout base */
+header, footer {
+    background-color: #2b3e50;
+    color: white;
+    padding: 15px 20px;
+    text-align: center;
+}
+
+main {
+    padding: 20px;
+    max-width: 1000px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    border-radius: 10px;
+}
+
+/* Titoli */
+h1, h2, h3 {
+    color: #2b3e50;
+}
+
+/* Tabelle */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #e9eef3;
+    color: #333;
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fb;
+}
+
+/* Pulsanti */
+button, a.button-link {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    text-decoration: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover, a.button-link:hover {
+    background-color: #0056b3;
+}
+
+/* Form */
+form {
+    margin-top: 20px;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Link generici */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

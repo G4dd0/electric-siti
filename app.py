@@ -55,17 +55,21 @@ def aggiungi_progetto():
     salva_progetti(progetti)
     return redirect(url_for('dashboard')) # ricarico la pagina dashboard dopo l'aggiunta
 
+# Routing alla funzione "elimina" --> viene passato il parametro ID (univoco) 
 @app.route('/dashboard/elimina/<int:id>', methods=['POST'])
 def elimina_progetto(id):
     progetti = carica_progetti()
-    progetti = [p for p in progetti if p['id'] != id]
-    salva_progetti(progetti)
+    progetti2 = []
+    for p in progetti:
+        if p['id'] != id: # reinserisco nel file json tutti i progetti ad eccezione del progetto con "id" corrispondente a quello eliminato
+            progetti2.append(p)
+    salva_progetti(progetti2)
     return redirect(url_for('dashboard'))
 
 @app.route('/dashboard/modifica/<int:id>', methods=['POST'])
 def modifica_progetto(id):
     progetti = carica_progetti()
-    progetto = next((p for p in progetti if p['id'] == id), None)
+    progetto = next((p for p in progetti if p['id'] == id), None) # vado a prendermi il progetto con "id" corrispondente a quello che cerco
     if not progetto:
         return "Progetto non trovato", 404
 
@@ -78,7 +82,7 @@ def modifica_progetto(id):
     return redirect(url_for('dashboard'))
 
 
-
+# Routing alla pagina delle conversioni
 @app.route('/converter')
 def converter():
     return render_template('converter.html')

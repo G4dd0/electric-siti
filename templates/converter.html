@@ -79,20 +79,20 @@
 
         let risultato = "";
 
-        if (!isNaN(L) && !isNaN(deltaI) && !isNaN(deltaT)) {
+        if (!isNaN(L) && !isNaN(deltaI) && !isNaN(deltaT) && isNaN(V)) {
             const Vcalc = L * (deltaI / deltaT);
             risultato = `Tensione calcolata: ${Vcalc.toFixed(3)} V`;
-        } else if (!isNaN(V) && !isNaN(deltaI) && !isNaN(deltaT)) {
+        } else if (!isNaN(V) && !isNaN(deltaI) && !isNaN(deltaT) && isNaN(L)) {
             const Lcalc = V / (deltaI / deltaT);
             risultato = `Induttanza calcolata: ${Lcalc.toFixed(6)} H`;
-        } else if (!isNaN(V) && !isNaN(L) && !isNaN(deltaT)) {
+        } else if (!isNaN(V) && !isNaN(L) && !isNaN(deltaT) && isNaN(deltaI)) {
             const deltaIcalc = (V * deltaT) / L;
             risultato = `ΔI calcolata: ${deltaIcalc.toFixed(3)} A`;
-        } else if (!isNaN(V) && !isNaN(L) && !isNaN(deltaI)) {
+        } else if (!isNaN(V) && !isNaN(L) && !isNaN(deltaI) && isNaN(deltaT)) {
             const deltaTcalc = (deltaI * L) / V;
             risultato = `Δt calcolata: ${deltaTcalc.toFixed(3)} s`;
         } else {
-            risultato = "Inserisci almeno 3 valori per calcolare il quarto.";
+            risultato = "Inserisci almeno 3 valori per calcolare il quarto. Se ne hai inseriti 4 rimuovine uno";
         }
 
         document.getElementById("risultato").textContent = risultato;

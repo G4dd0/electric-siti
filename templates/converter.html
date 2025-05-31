@@ -59,18 +59,75 @@
     <hr>
     <p>Queste grandezze sono alla base di ogni circuito elettrico o elettronico. Nel convertitore qui sotto potrai calcolare valori tra tensione, corrente, resistenza, capacità e induttanza in modo semplice e intuitivo.</p>
 
-    <h2>Calcolatore Legge di Induttanza</h2>
-    <form id="induttanzaForm">
-        <label>Tensione (V): <input type="number" id="v" step="any"></label><br>
-        <label>Induttanza (L in Henry): <input type="number" id="l" step="any"></label><br>
-        <label>ΔI (Ampere): <input type="number" id="deltaI" step="any"></label><br>
-        <label>Δt (secondi): <input type="number" id="deltaT" step="any"></label><br>
-        <button type="button" onclick="calcolaInduttanza()">Calcola</button>
-    </form>
+    <hr>
+    <h2>Convertitore Elettrotecnico Interattivo</h2>
+    <label for="formulaSelect">Scegli una formula:</label>
+    <select id="formulaSelect" onchange="mostraForm()">
+        <option value="">-- Seleziona --</option>
+        <option value="induttanza"> Legge di Induttanza </option>
+        <option value="ohm">Legge di Ohm</option>
+        <option value="condensatore">Energia in un Condensatore</option>
+        <option value="joule">Potenza (Legge di Joule)</option>
+    </select>
 
-    <p id="risultato"></p>
+    <!-- Contenitore dei form -->
+    <div id="formContainer" style="margin-top: 20px;"></div>
 
     <script>
+    function mostraForm() {
+        const container = document.getElementById("formContainer");
+        const scelta = document.getElementById("formulaSelect").value;
+        let html = "";
+
+        if (scelta == "induttanza"){
+            html =  `
+                    <h2>Calcolatore Legge di Induttanza</h2>
+                    <form id="induttanzaForm">
+                        <label>Tensione (V): <input type="number" id="v" step="any"></label><br>
+                        <label>Induttanza (L in Henry): <input type="number" id="l" step="any"></label><br>
+                        <label>ΔI (Ampere): <input type="number" id="deltaI" step="any"></label><br>
+                        <label>Δt (secondi): <input type="number" id="deltaT" step="any"></label><br>
+                        <button type="button" onclick="calcolaInduttanza()">Calcola</button>
+                    </form>
+
+                    <p id="risultato"></p>
+            ` ;
+        } else if (scelta === "ohm") {
+                html = `
+                    <h3>Legge di Ohm (V = I × R)</h3>
+                    <form id="ohmForm">
+                        <label>Tensione (V): <input type="number" id="vOhm" step="any"></label><br>
+                        <label>Corrente (I): <input type="number" id="iOhm" step="any"></label><br>
+                        <label>Resistenza (R): <input type="number" id="rOhm" step="any"></label><br>
+                        <button type="button" onclick="calcolaOhm()">Calcola</button>
+                    </form>
+                    <p id="outputOhm"></p>
+                `;
+        } else if (scelta === "condensatore") {
+            html = `
+                <h3>Energia in un condensatore (E = ½ × C × V²)</h3>
+                <form id="condForm">
+                    <label>Capacità (C in Farad): <input type="number" id="cCap" step="any"></label><br>
+                    <label>Tensione (V): <input type="number" id="vCap" step="any"></label><br>
+                    <button type="button" onclick="calcolaCondensatore()">Calcola Energia</button>
+                </form>
+                <p id="outputCond"></p>
+            `;
+        } else if (scelta === "joule") {
+            html = `
+                <h3>Potenza elettrica (P = I² × R)</h3>
+                <form id="jouleForm">
+                    <label>Corrente (I): <input type="number" id="iJoule" step="any"></label><br>
+                    <label>Resistenza (R): <input type="number" id="rJoule" step="any"></label><br>
+                    <button type="button" onclick="calcolaJoule()">Calcola Potenza</button>
+                </form>
+                <p id="outputJoule"></p>
+            `;
+        }
+
+        container.innerHTML = html;
+    }
+
     function calcolaInduttanza() {
         const V = parseFloat(document.getElementById("v").value);
         const L = parseFloat(document.getElementById("l").value);
@@ -96,7 +153,49 @@
         }
 
         document.getElementById("risultato").textContent = risultato;
+    }
+
+    function calcolaOhm() {
+        const V = parseFloat(document.getElementById("vOhm").value);
+        const I = parseFloat(document.getElementById("iOhm").value);
+        const R = parseFloat(document.getElementById("rOhm").value);
+        let out = "";
+
+        if (!isNaN(I) && !isNaN(R) && isNaN(V)) {
+            out = `Tensione calcolata: ${(I * R).toFixed(3)} V`;
+        } else if (!isNaN(V) && !isNaN(R) && isNaN(I)) {
+            out = `Corrente calcolata: ${(V / R).toFixed(3)} A`;
+        } else if (!isNaN(V) && !isNaN(I) && isNaN(R)) {
+            out = `Resistenza calcolata: ${(V / I).toFixed(3)} Ω`;
+        } else {
+            out = "Inserisci due valori per calcolare il terzo.";
         }
+        document.getElementById("outputOhm").textContent = out;
+    }
+
+    function calcolaCondensatore() {
+        const C = parseFloat(document.getElementById("cCap").value);
+        const V = parseFloat(document.getElementById("vCap").value);
+
+        if (!isNaN(C) && !isNaN(V)) {
+            const E = 0.5 * C * V * V;
+            document.getElementById("outputCond").textContent = `Energia immagazzinata: ${E.toFixed(6)} Joule`;
+        } else {
+            document.getElementById("outputCond").textContent = "Inserisci capacità e tensione.";
+        }
+    }
+
+    function calcolaJoule() {
+        const I = parseFloat(document.getElementById("iJoule").value);
+        const R = parseFloat(document.getElementById("rJoule").value);
+
+        if (!isNaN(I) && !isNaN(R)) {
+            const P = I * I * R;
+            document.getElementById("outputJoule").textContent = `Potenza dissipata: ${P.toFixed(3)} Watt`;
+        } else {
+            document.getElementById("outputJoule").textContent = "Inserisci corrente e resistenza.";
+        }
+    }
     </script>
 
 </body>

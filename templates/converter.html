@@ -1,10 +1,104 @@
+{% extends 'base.html' %}
+
+{% block title %}Convertitore{% endblock %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>Sito Progetto</title>
+    <style>
+        h2, h3 {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+        
+        pre {
+            background-color: #f4f4f4;
+            padding: 5px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+        
+        p {
+            line-height: 1.6;
+        }
+        
+    </style>
 </head>
 <body>
-    <h1>Io converto le cose!</h1>
+    <h2>Guida introduttiva all'Elettrotecnica</h2>
+    <p>L'elettrotecnica è la branca della fisica che studia i fenomeni elettrici, le loro leggi e l'utilizzo dell'energia elettrica nei circuiti. In questa sezione troverai una guida semplificata ai principali concetti fondamentali, utile per orientarsi nel mondo dell'elettronica pratica.</p>
+    <hr>
+
+    <h3>📌 1. Carica elettrica (Q)</h3>
+    <p>La carica elettrica è la quantità di elettricità presente in un corpo o trasferita da un punto all'altro. L'unità di misura è il <strong>Coulomb (C)</strong>. La carica di un singolo elettrone è circa <code>−1,6 × 10⁻¹⁹ C</code>.</p>
+
+    <h3>📌 2. Corrente elettrica (I)</h3>
+    <p>È il flusso di cariche in un conduttore nel tempo. Si misura in <strong>Ampere (A)</strong>. La relazione fondamentale è:
+    <pre>I = Q / t</pre>
+    Dove <code>I</code> è la corrente, <code>Q</code> la carica in Coulomb, e <code>t</code> il tempo in secondi.</p>
+
+    <h3>📌 3. Tensione o differenza di potenziale (V)</h3>
+    <p>La tensione elettrica rappresenta la “spinta” che muove le cariche. È come la pressione dell'acqua in un tubo. Si misura in <strong>Volt (V)</strong>.</p>
+
+    <h3>📌 4. Resistenza elettrica (R)</h3>
+    <p>La resistenza indica quanto un materiale si oppone al passaggio della corrente. Si misura in <strong>Ohm (Ω)</strong>. La relazione con corrente e tensione è data dalla <strong>Legge di Ohm</strong>:
+    <pre>V = I × R</pre>
+    </p>
+
+    <h3>📌 5. Capacità elettrica (C)</h3>
+    <p>La capacità è la proprietà di un componente (condensatore) di accumulare carica elettrica. Si misura in <strong>Farad (F)</strong>. La formula è:
+    <pre>Q = C × V</pre>
+    </p>
+
+    <h3>📌 6. Induttanza (L)</h3>
+    <p>L'induttanza è la capacità di un componente (induttore) di opporsi a variazioni della corrente. Si misura in <strong>Henry (H)</strong> e la formula è:
+    <pre>V = L × (dI/dt)</pre>
+    dove <code>dI/dt</code> rappresenta la variazione di corrente nel tempo.</p>
+
+    <hr>
+    <p>Queste grandezze sono alla base di ogni circuito elettrico o elettronico. Nel convertitore qui sotto potrai calcolare valori tra tensione, corrente, resistenza, capacità e induttanza in modo semplice e intuitivo.</p>
+
+    <h2>Calcolatore Legge di Induttanza</h2>
+    <form id="induttanzaForm">
+        <label>Tensione (V): <input type="number" id="v" step="any"></label><br>
+        <label>Induttanza (L in Henry): <input type="number" id="l" step="any"></label><br>
+        <label>ΔI (Ampere): <input type="number" id="deltaI" step="any"></label><br>
+        <label>Δt (secondi): <input type="number" id="deltaT" step="any"></label><br>
+        <button type="button" onclick="calcolaInduttanza()">Calcola</button>
+    </form>
+
+    <p id="risultato"></p>
+
+    <script>
+    function calcolaInduttanza() {
+        const V = parseFloat(document.getElementById("v").value);
+        const L = parseFloat(document.getElementById("l").value);
+        const deltaI = parseFloat(document.getElementById("deltaI").value);
+        const deltaT = parseFloat(document.getElementById("deltaT").value);
+
+        let risultato = "";
+
+        if (!isNaN(L) && !isNaN(deltaI) && !isNaN(deltaT)) {
+            const Vcalc = L * (deltaI / deltaT);
+            risultato = `Tensione calcolata: ${Vcalc.toFixed(3)} V`;
+        } else if (!isNaN(V) && !isNaN(deltaI) && !isNaN(deltaT)) {
+            const Lcalc = V / (deltaI / deltaT);
+            risultato = `Induttanza calcolata: ${Lcalc.toFixed(6)} H`;
+        } else if (!isNaN(V) && !isNaN(L) && !isNaN(deltaT)) {
+            const deltaIcalc = (V * deltaT) / L;
+            risultato = `ΔI calcolata: ${deltaIcalc.toFixed(3)} A`;
+        } else if (!isNaN(V) && !isNaN(L) && !isNaN(deltaI)) {
+            const deltaTcalc = (deltaI * L) / V;
+            risultato = `Δt calcolata: ${deltaTcalc.toFixed(3)} s`;
+        } else {
+            risultato = "Inserisci almeno 3 valori per calcolare il quarto.";
+        }
+
+        document.getElementById("risultato").textContent = risultato;
+        }
+    </script>
+
 </body>
 </html>
+{% endblock %}

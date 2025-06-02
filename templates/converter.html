@@ -68,6 +68,7 @@
         <option value="ohm">Legge di Ohm</option>
         <option value="condensatore">Energia in un Condensatore</option>
         <option value="joule">Potenza (Legge di Joule)</option>
+        <option value="capacitacondensatorepiano">Capacità di un condensatore piano</option>
     </select>
 
     <!-- Contenitore dei form -->
@@ -122,6 +123,25 @@
                     <button type="button" onclick="calcolaJoule()">Calcola Potenza</button>
                 </form>
                 <p id="outputJoule"></p>
+            `;
+        } else if (scelta === "capacitacondensatorepiano") {
+            html = `
+                <h2>Calcolatore Capacità di un Condensatore Piano</h2>
+                <form id="condensatoreForm">
+                    <label>Area delle piastre (cm²): <input type="number" id="area" step="any"></label><br>
+                    <label>Distanza tra le piastre (mm): <input type="number" id="distanza" step="any"></label><br>
+                    <label>Materiale dielettrico:
+                        <select id="materiale">
+                            <option value="1">Aria (εr = 1)</option>
+                            <option value="2.2">Carta (εr ≈ 2.2)</option>
+                            <option value="4.7">Vetro (εr ≈ 4.7)</option>
+                            <option value="2.1">Plastica (εr ≈ 2.1)</option>
+                        </select>
+                    </label><br>
+                    <button type="button" onclick="calcolaCapacita()">Calcola Capacità</button>
+                </form>
+
+                <p id="risultatoCondensatore"></p>
             `;
         }
 
@@ -195,6 +215,42 @@
         } else {
             document.getElementById("outputJoule").textContent = "Inserisci corrente e resistenza.";
         }
+    }
+
+    function calcolaCapacita() {
+        const ε0 = 8.854e-12; // permittività del vuoto in F/m
+        const area_cm2 = parseFloat(document.getElementById("area").value);
+        const distanza_mm = parseFloat(document.getElementById("distanza").value);
+        const εr = parseFloat(document.getElementById("materiale").value);
+
+        if (isNaN(area_cm2) || isNaN(distanza_mm) || isNaN(εr)) {
+            document.getElementById("risultatoCondensatore").textContent = "Inserisci tutti i valori.";
+            return;
+        }
+
+        // Conversioni
+        const A = area_cm2 / 10000; // da cm² a m²
+        const d = distanza_mm / 1000; // da mm a m
+
+        // Formula
+        const C = εr * ε0 * (A / d); // capacità in Farad
+
+        let unità = "F";
+        let valore = C;
+
+        if (C < 1e-6) {
+            valore = C * 1e9;
+            unità = "nF";
+        } else if (C < 1e-3) {
+            valore = C * 1e6;
+            unità = "µF";
+        } else if (C < 1) {
+            valore = C * 1e3;
+            unità = "mF";
+        }
+
+        document.getElementById("risultatoCondensatore").textContent =
+            `Capacità del condensatore: ${valore.toFixed(3)} ${unità}`;
     }
     </script>
 
